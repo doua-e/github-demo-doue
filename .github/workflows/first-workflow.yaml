@@ -22,5 +22,6 @@ jobs:
       - name: check file there.
         run: |
           hostname
+          echo "Value: $MY_ENV_VAR"
           pwd
           ls -al
