@@ -4,12 +4,23 @@ jobs:
   first-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Print Hello World
+      - name: Get info
         run: |
-          echo "Hello World"
-          echo "Hello World 222"
-      - name: Print a second step
-        run: echo "Another Step"
-      - name: Print a third step
-        shell: python
-        run: print("python Step")
+          hostname
+          pwd
+          ls -l /
+      - name: Create a file
+        run: |
+          ls -al
+          echo  "One line" | tee myfile.log
+          ls -al
+      - name: A final step
+        run: ls -al
+    second-job:
+      run-on: ubuntu-latest
+      steps:
+        - name: check file there
+          run: |
+            hostname
+            pwd
+            ls -al
