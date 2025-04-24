@@ -17,6 +17,7 @@ jobs:
       - name: Cypress Tests
         run: npx cypress run
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -26,6 +27,7 @@ jobs:
       - name: Build the app
         run: npm run build
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Pseudo Deployment
