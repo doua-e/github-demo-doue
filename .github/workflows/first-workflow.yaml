@@ -19,7 +19,7 @@ jobs:
     second-job:
       run-on: ubuntu-latest
       steps:
-        - name: check file there
+        - name: check file there.
           run: |
             hostname
             pwd
