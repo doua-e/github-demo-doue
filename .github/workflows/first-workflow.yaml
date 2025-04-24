@@ -8,3 +8,7 @@ jobs:
         run: echo "Hello World"
       - name: Print a second step
         run: echo "Another Step"
+      - name: Print a third step
+        shell: python
+        run: pritn (python Step)
+
