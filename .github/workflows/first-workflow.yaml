@@ -16,11 +16,11 @@ jobs:
           ls -al
       - name: A final step
         run: ls -al
-    second-job:
-      run-on: ubuntu-latest
-      steps:
-        - name: check file there.
-          run: |
-            hostname
-            pwd
-            ls -al
+  second-job:
+    run-on: ubuntu-latest
+    steps:
+      - name: check file there.
+        run: |
+          hostname
+          pwd
+          ls -al
