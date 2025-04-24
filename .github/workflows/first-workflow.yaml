@@ -25,6 +25,8 @@ jobs:
         run: |
           hostname
           echo "Value: $MY_ENV_VAR"
-          echo "Secret: ${{ secrets.MY_ENV_VAR }}"
+          echo "Secret: ${{ vars.MY_ENV_VAR }}"
           pwd
           ls -al
+      - name: GitHub.
+        run: echo "${{ toJSON(github)}}"
