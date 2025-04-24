@@ -10,5 +10,4 @@ jobs:
         run: echo "Another Step"
       - name: Print a third step
         shell: python
-        run: pritn ("python Step")
-
+        run: print("python Step")
