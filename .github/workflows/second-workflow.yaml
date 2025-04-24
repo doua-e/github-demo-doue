@@ -5,13 +5,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
+        id: cache
         uses: actions/checkout@v4
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
-          path: node_modules
+          path: |
+            node_modules
+              ~/.cache/Cypress
           key: npm-dep-${{ hashFiles('**/package-lock.json') }}
+
       - name: Get dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Lint code
         run: npm run lint
@@ -26,8 +31,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
+        id: cache
         uses: actions/checkout@v4
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+              ~/.cache/Cypress
+          key: npm-dep-${{ hashFiles('**/package-lock.json') }}
+
       - name: Get dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Build the app
         run: npm run build
