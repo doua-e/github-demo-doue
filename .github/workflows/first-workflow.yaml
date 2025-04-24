@@ -5,8 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Hello World
-        run: 
+        run: |
           echo "Hello World"
+          sleep 600
           echo "Hello World 222"
       - name: Print a second step
         run: echo "Another Step"
