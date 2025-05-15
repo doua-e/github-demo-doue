@@ -57,10 +57,10 @@ jobs:
 
       - name: Seed the database
         run: >
-          PGPASSWORD=${{ secrets.DB_PASSWORD }} psql -h localhost
-          -U ${{ secrets.DB_USERNAME }}
-          -d gh_db 
-          -f ${{ github.workspace }}/indus/data/init_db.sql
+          docker run -d --rm --net=host 
+          -e PGRST_JWT_SECRET="${{ secrets.PGRST_JWT_SECRET }}"
+          -e PGRST_DB_URI="postgres://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@localhost/gh_db"
+          postgrest/postgrest
 
       - name: Start Postgres REST
         run: 
