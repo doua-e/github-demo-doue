@@ -1,6 +1,13 @@
 name: Reusable Deploy
 on:
+
+  push:
+    branches:
+      - master
+      - 'releases/**'  
+
   workflow_call:
+   
     inputs:
       artifact-name:
         required: false
@@ -10,6 +17,7 @@ on:
       result:
         description: Workflow Deployment Result
         value: ${{ jobs.deploy.outputs.job-result }}
+    
 
 jobs:
   deploy:
@@ -30,5 +38,5 @@ jobs:
         run: ls
       - name: Output result
         id: output-result
-        run: echo "deployment-result=This is an output" >> $GITHUB_OUTPUT
+        run: echo "deployment-result=This is an output >> $GITHUB_OUTPUT"
       
