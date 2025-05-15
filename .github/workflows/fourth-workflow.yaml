@@ -1,4 +1,4 @@
-name: Second Workflow
+name: Fourth Workflow
 on:
   push:
   workflow_dispatch:
@@ -69,7 +69,6 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     outputs:
-      
       bom: ${{ steps.publish-bom.outputs.bom_list }}
 
     steps:
@@ -107,7 +106,7 @@ jobs:
     needs: [build, lint]
     uses: ./.github/workflows/deploy.yml
     with:
-        artifact-name: my-app
+      artifact-name: my-app
   post-deploy:
     needs: deploy
     runs-on: ubuntu-latest
