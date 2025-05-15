@@ -1,6 +1,10 @@
 name: Fourth Workflow
 on:
   push:
+    branches:
+      - master
+      - "releases/**"
+
   workflow_dispatch:
     inputs:
       display-bom:
