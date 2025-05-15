@@ -1,29 +1,29 @@
-name: Third Workflow
+name: Second Workflow
 on:
-    push:
-    workflow_dispatch:
-        inputs:
-          display-bom:
-            required: false
-            type: 'boolean'
-            default: false
+  push:
+  workflow_dispatch:
+    inputs:
+      display-bom:
+        required: false
+        type: "boolean"
+        default: false
 jobs:
   lint:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Get code
-            uses: actions/checkout@v4
-          - name: Cache dependencies
-            id: cache
-            uses: actions/cache@v4
-            with:
-                path: node_modules
-                key: npm-dep-${{ hashFiles('**/package-lock.json') }}
-          - name: Get dependencies
-            if: steps.cache.outputs.cache-hit != 'true'
-            run: npm ci
-          - name: Build the app
-            run: npm run lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: npm-dep-${{ hashFiles('**/package-lock.json') }}
+      - name: Get dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Build the app
+        run: npm run lint
 
   test:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
           name: cypress-screenshots
           path: cypress/screenshots
           if-no-files-found: ignore
-              
+
   # - name: Cache dependencies
   #   uses: actions/cache@v4
   # id: cache
@@ -64,7 +64,6 @@ jobs:
   #   run: npm run dev < /dev/null & npx wait-on "http://localhost:5173" --timout 10s
   # - name: Cypress Tests
   #   run: npx cypress run
-  
 
   build:
     needs: test
@@ -104,7 +103,7 @@ jobs:
           echo EOF >> $GITHUB_OUTPUT
 
   deploy:
-    needs: [build,lint]
+    needs: [build, lint]
     runs-on: ubuntu-latest
     steps:
       - name: Pseudo Deployment
@@ -119,4 +118,3 @@ jobs:
       - name: Display BOM
         if: github.event.inputs.display-bom
         run: echo "${{ needs.build.outputs.bom }}"
-        
