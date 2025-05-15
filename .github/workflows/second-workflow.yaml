@@ -5,10 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
-        id: cache
         uses: actions/checkout@v4
       - name: Cache dependencies
         uses: actions/cache@v4
+        id: cache
         with:
           path: |
             node_modules
@@ -16,7 +16,7 @@ jobs:
           key: npm-dep-${{ hashFiles('**/package-lock.json') }}
 
       - name: Get dependencies
-        if: steps.cache.outputs.cache-hit != 'true' 
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Lint code
         run: npm run lint
@@ -30,7 +30,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           start: npm run dev
-          wait-on: 'http://localhost:5173'
+          wait-on: "http://localhost:5173"
 
   build:
     needs: test
