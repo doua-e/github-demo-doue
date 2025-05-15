@@ -58,8 +58,8 @@ jobs:
       - name: Seed the database
         run: >
           docker run -d --rm --net=host 
-          -e PGRST_JWT_SECRET="${{ secrets.PGRST_JWT_SECRET }}"
-          -e PGRST_DB_URI="postgres://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@localhost/gh_db"
+          -e PGRST_JWT_SECRET="${{ secrets.PGRST_JWT_SECRET }}" 
+          -e PGRST_DB_URI="postgres://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@localhost/gh_db" 
           postgrest/postgrest
 
       - name: Start Postgres REST
