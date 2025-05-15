@@ -16,7 +16,7 @@ jobs:
           key: npm-dep-${{ hashFiles('**/package-lock.json') }}
 
       - name: Get dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.cache.outputs.cache-hit != 'true' 
         run: npm ci
       - name: Lint code
         run: npm run lint
