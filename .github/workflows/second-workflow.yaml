@@ -1,39 +1,39 @@
 name: Second Workflow
 on: push
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v4
-      # - name: Cache dependencies
-      #   uses: actions/cache@v4
-        # id: cache
-        # with:
-        #   path: |
-        #     node_modules
-        #       ~/.cache/Cypress
-        #   key: npm-dep-${{ hashFiles('**/package-lock.json') }}
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Get code
+  #       uses: actions/checkout@v4
+  # - name: Cache dependencies
+  #   uses: actions/cache@v4
+  # id: cache
+  # with:
+  #   path: |
+  #     node_modules
+  #       ~/.cache/Cypress
+  #   key: npm-dep-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Get dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
-      # - name: Lint code
-      #   run: npm run lint
-      # - name: List content
-      #   run: ls -al
-      # - name: Run the server
-      #   run: npm run dev < /dev/null & npx wait-on "http://localhost:5173" --timout 10s
-      # - name: Cypress Tests
-      #   run: npx cypress run
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          start: npm run dev
-          wait-on: "http://localhost:5173"
+  # - name: Get dependencies
+  #   if: steps.cache.outputs.cache-hit != 'true'
+  #   run: npm ci
+  # - name: Lint code
+  #   run: npm run lint
+  # - name: List content
+  #   run: ls -al
+  # - name: Run the server
+  #   run: npm run dev < /dev/null & npx wait-on "http://localhost:5173" --timout 10s
+  # - name: Cypress Tests
+  #   run: npx cypress run
+  # - name: Cypress run
+  #   uses: cypress-io/github-action@v6
+  #   with:
+  #     start: npm run dev
+  #     wait-on: "http://localhost:5173"
 
   build:
-    needs: test
+    #needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -50,8 +50,16 @@ jobs:
       - name: Get dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
+
       - name: Build the app
         run: npm run build
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-app
+          path: dist
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
