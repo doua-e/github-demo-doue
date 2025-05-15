@@ -35,6 +35,9 @@ jobs:
   build:
     #needs: test
     runs-on: ubuntu-latest
+    outputs:
+      bom: ${{ steps.publish-bom.outputs.bom_list }}
+
     steps:
       - name: Get code
         id: cache
@@ -59,6 +62,12 @@ jobs:
         with:
           name: my-app
           path: dist
+      - name: Detail content
+        id: publish-bom
+        run: |
+          echo 'bom_list<<EOF' >> $GITHUB_OUTPUT
+          find dist -name '*.js' -exec echo '{}' \; >> $GITHUB_OUTPUT
+          echo EOF >> $GITHUB_OUTPUT
 
   deploy:
     needs: build
@@ -66,3 +75,12 @@ jobs:
     steps:
       - name: Pseudo Deployment
         run: echo "Deploying App"
+      - name: Get artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: my-app
+
+      - name: Output artifacts
+        run: ls
+      - name: Display BOM
+        run: echo "${{ needs.build.outputs.bom }}"
