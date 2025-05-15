@@ -1,4 +1,4 @@
-name: Second Workflow
+name: Third Workflow
 on:
     push:
     workflow_dispatch:
@@ -31,10 +31,19 @@ jobs:
       - name: Get code
         uses: actions/checkout@v4
       - name: Cypress run
+        # continue-on-error: true
         uses: cypress-io/github-action@v6
         with:
           start: npm run dev
           wait-on: "http://localhost:5173"
+      - name: Get evidence
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore
+              
   # - name: Cache dependencies
   #   uses: actions/cache@v4
   # id: cache
